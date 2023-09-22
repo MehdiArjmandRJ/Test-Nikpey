@@ -1,0 +1,9 @@
+<form [formGroup]="controlForm">
+  <mat-form-field class="example-full-width">
+    <mat-label>{{label}}</mat-label>
+    <input [type]="type" matInput [formControlName]="controlName">
+    <mat-error *ngIf="checkErrors()">
+      {{getErrors()}}
+    </mat-error>
+  </mat-form-field>
+</form>

@@ -1,0 +1,12 @@
+<form [formGroup]="controlForm">
+
+  <mat-form-field class="example-full-width">
+    <mat-label>{{label}}</mat-label>
+    <mat-select [formControlName]="controlName">
+      <mat-option *ngFor="let item of list" [value]="item.key">{{item.value}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="checkErrors()">
+      {{getErrors()}}
+    </mat-error>
+  </mat-form-field>
+</form>

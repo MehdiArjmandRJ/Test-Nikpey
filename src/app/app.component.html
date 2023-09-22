@@ -1,0 +1,11 @@
+<!-- <router-outlet /> -->
+<!-- <router-outlet></router-outlet> -->
+<form class="example-form" [formGroup]="form" (ngSubmit)="submitForm()">
+  <app-shared-input label="Title" type="text" controlName="title" [controlForm]="form" />
+  <app-shared-input label="email" type="email" controlName="email" [controlForm]="form" />
+  <app-shared-select-box label="Title" [list]="authorList" controlName="userId" [controlForm]="form" />
+  <app-shared-textarea label="Body" controlName="body" placeHolder="enter any body" [controlForm]="form" />
+  <button type="submit" mat-raised-button color="primary">Primary</button>
+</form>
+
+<app-shared-table/>
