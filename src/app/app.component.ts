@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { email, minLength, required, RxFormBuilder, RxFormGroup } from '@rxweb/reactive-form-validators';
-import { getPost } from './core/store/post/post.action';
+import * as PostActions from './core/store/post/post.action';
 import { getPostStore } from './core/store/post/post.selector';
 import { ISelectBoxItem } from './shared/components';
 class PostModel {
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.initialForm();
-    this.store.dispatch(getPost())
+    this.store.dispatch(PostActions.fetchPost())
 
     setTimeout(() => {
       this.store.select(getPostStore).subscribe((data) => {
