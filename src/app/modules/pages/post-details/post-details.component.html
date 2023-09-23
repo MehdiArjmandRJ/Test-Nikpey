@@ -1,0 +1,21 @@
+<mat-card *ngIf="dataSource">
+  <div class="header">
+    <div>
+      <mat-card-title>Post Details</mat-card-title>
+      <div class="header__breadcrumbs">
+        <div  [routerLink]="item.route" *ngFor="let item of breadcrumbs,let i = index">
+          {{item.label}}
+          <span [hidden]="breadcrumbs.length - 1 <= i">></span>
+        </div>
+      </div>
+    </div>
+    <button mat-raised-button (click)="back()" color="warn">Back</button>
+  
+  </div>
+  <mat-card-title>{{dataSource.title}}</mat-card-title>
+  <p>
+    {{dataSource.body}}
+  </p>
+
+  <span>author : {{getUserName()}}</span>
+</mat-card>

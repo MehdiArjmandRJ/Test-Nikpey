@@ -1,0 +1,4 @@
+<mat-grid-list #grid cols="3" rowHeight="2:1">
+  <app-header-posts title="Posts Page" [breadcrumbs]="breadcrumbs"></app-header-posts>
+  <app-body-posts *ngIf="dataSource" [dataSource]="dataSource" [displayedColumns]="displayedColumns"></app-body-posts>
+</mat-grid-list>

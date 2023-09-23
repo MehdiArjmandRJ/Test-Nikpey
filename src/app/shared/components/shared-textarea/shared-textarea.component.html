@@ -1,7 +1,7 @@
 <form [formGroup]="controlForm">
   <mat-form-field class="example-full-width">
     <mat-label>{{label}}</mat-label>
-    <textarea matInput [placeholder]="placeHolder" [formControlName]="controlName"></textarea>
+    <textarea  rows="8" matInput [placeholder]="placeHolder" [formControlName]="controlName"></textarea>
     <mat-error *ngIf="checkErrors()">
       {{getErrors()}}
     </mat-error>

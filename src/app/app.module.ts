@@ -1,22 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { PostEffects } from './core/store/post/post.effect';
-import { SharedInputComponent, SharedTableComponent, SharedTextareaComponent } from './shared/components';
-import { SharedSelectBoxComponent } from './shared/components/shared-select-box/shared-select-box.component';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { PostReducer } from './core/store/post/post.reducer';
+import { PostOneReducerRQ, PostOneReducerRS, PostReducerRQ, PostReducerRS } from './core/store/post/post.reducer';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -24,17 +20,16 @@ import { PostReducer } from './core/store/post/post.reducer';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     CoreModule,
-    SharedInputComponent,
-    ReactiveFormsModule,
-    SharedSelectBoxComponent,
-    SharedTextareaComponent,
-    SharedTableComponent,
-    RxReactiveFormsModule,
-    MatButtonModule, MatInputModule, MatFormFieldModule,
+    FormsModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ post: PostReducer }),
+    ToastrModule.forRoot(),
+    StoreModule.forRoot({
+      requestState: PostReducerRQ,
+      responseState: PostReducerRS,
+      requestOneState: PostOneReducerRQ,
+      responseOneState: PostOneReducerRS,
+    }),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([PostEffects])
   ],

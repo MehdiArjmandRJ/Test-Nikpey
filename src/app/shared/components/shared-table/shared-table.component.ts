@@ -1,31 +1,16 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
-
-export interface ITableColumnsModel {
-  key: string;
-  value: string;
-}
+import { ITableColumnsModel } from '@app/shared/interfaces/general.interface';
+import { interval, take } from 'rxjs';
+import { ISelectBoxItem } from '../shared-select-box/shared-select-box.component';
 
 @Component({
   selector: 'app-shared-table',
@@ -34,14 +19,33 @@ export interface ITableColumnsModel {
   standalone: true,
   imports: [
     CommonModule,
-    MatTableModule],
+    MatTableModule,
+    MatButtonModule,
+    MatSortModule,
+    MatSelectModule,
+    FormsModule,
+    MatInputModule
+  ],
 })
 export class SharedTableComponent implements OnInit {
   matDisplayedColumns!: string[];
+  title!: string;
+  selectedFilter: any;
+  firstDataSource: any;
+  @Input() displayedColumns!: ITableColumnsModel[];
+  @Input() dataSource: any;
+  @Input() filterList!: ISelectBoxItem[];
 
-  @Input() displayedColumns: ITableColumnsModel[] = [{ key: 'position', value: 'Position' }, { key: 'name', value: 'Name' }, { key: 'weight', value: 'Weight' }, { key: 'symbol', value: 'Symbol' }];
-  @Input() dataSource = ELEMENT_DATA;
-  constructor() { }
+  @Output() onEditAction: EventEmitter<string> = new EventEmitter<any>();
+  @Output() onDeleteAction: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onDetailAction: EventEmitter<string> = new EventEmitter<string>();
+  @Output() dataSourceChange: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  constructor(private _liveAnnouncer: LiveAnnouncer) {
+
+  }
 
   ngOnInit() {
     this.matDisplayedColumns = this.getMatDisplayedColumns();
@@ -49,6 +53,65 @@ export class SharedTableComponent implements OnInit {
 
   getMatDisplayedColumns() {
     return this.displayedColumns.map((item: ITableColumnsModel) => item.key)
+  }
+
+  edit(data: any) {
+    this.onEditAction.emit(data);
+  }
+
+  delete(id: string) {
+    this.onDeleteAction.emit(id);
+  }
+
+  detail(id: string) {
+    this.onDetailAction.emit(id);
+  }
+
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction === 'desc') {
+      let newDataSource = this.dataSource.sort((firstItem: any, secondItem: any) => (firstItem[sortState.active] > secondItem[sortState.active] ? -1 : 1))
+      this.dataSource = [];
+      interval(0).pipe(take(1),
+      ).subscribe(() =>
+        this.dataSource = newDataSource
+      )
+    } else {
+      let newDataSource = this.dataSource.sort((firstItem: any, secondItem: any) => firstItem[sortState.active] - secondItem[sortState.active])
+      this.dataSource = [];
+      interval(0).pipe(take(1),
+      ).subscribe(() =>
+        this.dataSource = newDataSource
+      )
+    }
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
+
+  changeAuthorFilter(data: string) {
+    this.firstDataSource = this.dataSource;
+    console.log(this.firstDataSource);
+    let newDataSource = this.firstDataSource.filter((item: any) => item['userId'] === data)
+    interval(0).pipe(take(1),
+    ).subscribe(() =>
+      this.dataSource = newDataSource
+    )
+  }
+
+  changeTitleFilter(event: any) {
+    this.title = event.target.value;
+    if (this.title) {
+      let newDataSource = this.firstDataSource.filter((item: any) => item['title'] === this.title)
+      interval(0).pipe(take(1),
+      ).subscribe(() =>
+        this.dataSource = newDataSource
+      )
+    } else {
+      this.dataSource = this.firstDataSource
+    }
+
   }
 
 }

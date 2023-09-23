@@ -1,8 +1,20 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { IGetPostRS } from '../../schema/post/dto/get-post-rq.dto';
 
+export const selectPostStateRS = createFeatureSelector<IGetPostRS>('responseState');
+export const selectOnePostStateRS = createFeatureSelector<IGetPostRS>('responseOneState');
 
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { IGetPost } from "../../schema/post/dto/get-post-rq.dto";
+export const selectAllPostsRS = createSelector(
+  selectPostStateRS,
+  (state) => state.entities
+);
 
-const getPostState = createFeatureSelector<IGetPost>('post');
+export const selectOnePostsRS = createSelector(
+  selectOnePostStateRS,
+  (state) => state.entities
+);
 
-export const getPostStore = createSelector(getPostState, (state) => state); 
+export const selectTotalPostsRS = createSelector(
+  selectPostStateRS,
+  (state) => state.ids.length
+);

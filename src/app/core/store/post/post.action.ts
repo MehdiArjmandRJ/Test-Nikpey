@@ -1,36 +1,30 @@
+import { IPostTableElement } from '@app/modules/pages/posts/factory/interfaces/posts.interface';
 import { createAction, props } from '@ngrx/store';
-import { IDeletePostRQ, IDeletePostRS } from '../../schema/post/dto/delete-post-rq.dto';
-import { IInsertPostRQ, IInsertPostRS } from '../../schema/post/dto/insert-post-rq.dto';
-import { IUpdatePostRQ, IUpdatePostRS } from '../../schema/post/dto/update-post-rq.dto';
-import { IGetPost } from '../../schema/post/dto/get-post-rq.dto';
-//Now
-const GET_POST = '[POST] get posts'
-const FETCH_POST = '[POST] fetch posts'
 
 
-export const fetchPost = createAction(FETCH_POST);
-export const getPost = createAction(GET_POST, props<{posts: IGetPost[]}>());
+export const fetchPost = createAction('[POST] fetch posts');
+export const deletePost = createAction('[POST] delete posts', props<{ id: string }>());
+export const editPost = createAction('[POST] edit posts', props<{ id: string, data: any }>());
+export const insertPost = createAction('[POST] insert posts', props<{ data: any }>());
+export const getPostDetail = createAction('[POST] detail posts', props<{ id: string }>());
 
-//Past
-export const resetPostState = createAction(
-  '[POST] Reset State'
-);
-// export const getPost = createAction(
-//   '[POST] Get Post',
-//   props<{ getPostRQ: IGetPostRQ, getPostRS: IGetPostRS }>()
-// );
 
-export const insertPost = createAction(
-  '[POST] Insert Post',
-  props<{ insertPostRQ: IInsertPostRQ, insertPostRS: IInsertPostRS }>()
+export const getPostSuccess = createAction(
+  "[Post] Get Post Success",
+  props<{ posts: IPostTableElement[] }>()
 );
 
-export const updatePost = createAction(
-  '[POST] Update Post',
-  props<{ updatePostRQ: IUpdatePostRQ, updatePostRS: IUpdatePostRS }>()
+export const getPostsFailure = createAction(
+  "[Post] Get Posts Failure",
+  props<{ error: string }>()
 );
 
-export const deletePost = createAction(
-  '[POST] Delete Post',
-  props<{ deletePostRQ: IDeletePostRQ, deletePostRS: IDeletePostRS }>()
+export const getOnePostSuccess = createAction(
+  "[Post] Get One Post Success",
+  props<{ post: IPostTableElement }>()
+);
+
+export const getOnePostsFailure = createAction(
+  "[Post] Get One Posts Failure",
+  props<{ error: string }>()
 );

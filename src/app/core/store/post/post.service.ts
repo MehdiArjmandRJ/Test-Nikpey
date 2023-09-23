@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IPostTableElement } from '@app/modules/pages/posts/factory/interfaces/posts.interface';
 import { IGetPostRQ } from '../../schema/post/dto/get-post-rq.dto';
 
 @Injectable({
@@ -17,7 +18,7 @@ export class PostService {
     return this.httpClient.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
   }
 
-  public insertPost(dataRQ: IGetPostRQ) {
+  public insertPost(dataRQ: IPostTableElement) {
     return this.httpClient.post(`https://jsonplaceholder.typicode.com/posts`, dataRQ)
   }
 

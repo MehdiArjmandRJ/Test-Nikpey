@@ -1,0 +1,10 @@
+<mat-card class="header">
+  <div>
+    <mat-card-title>{{title}}</mat-card-title>
+    <div class="header__breadcrumbs" [routerLink]="item.route" *ngFor="let item of breadcrumbs,let i = index">
+      {{item.label}}
+      <span [hidden]="breadcrumbs.length - 1 <= i">></span>
+    </div>
+  </div>
+  <button mat-stroked-button (click)="insert()" color="primary">Add</button>
+</mat-card>

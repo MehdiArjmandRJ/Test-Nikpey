@@ -1,0 +1,3 @@
+<mat-card>
+  <app-shared-table [(dataSource)]="dataSource" [filterList]="authorList" [displayedColumns]="displayedColumns" (onDetailAction)="onDetailAction($event)" (onDeleteAction)="onDeleteAction($event)" (onEditAction)="onEditAction($event)"/>
+</mat-card>

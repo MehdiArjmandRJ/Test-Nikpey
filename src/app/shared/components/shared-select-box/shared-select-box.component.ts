@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { RxFormGroup, RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 export interface ISelectBoxItem {
-  key: string;
+  key: any;
   value: string
 }
 @Component({

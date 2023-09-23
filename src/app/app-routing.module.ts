@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component:AppComponent,
-    // loadChildren: () => import('./modules/layout-routing.module').then((module) => module.LayoutRoutingModule)
-  }
+    path: 'panel',
+    loadChildren: () => import('./modules/layout.module').then((module) => module.LayoutModule)
+  },
+  { path: '**', redirectTo: 'panel/posts', pathMatch: 'full' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

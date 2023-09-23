@@ -1,0 +1,15 @@
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    &__breadcrumbs{
+        display: flex;
+        gap: 8px;
+        div{
+            cursor: pointer;
+        }
+    }
+}

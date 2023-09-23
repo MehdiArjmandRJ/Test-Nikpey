@@ -1,4 +1,5 @@
-import { EntityState, createEntityAdapter } from '@ngrx/entity';
+import { IPostTableElement } from '@app/modules/pages/posts/factory/interfaces/posts.interface';
+import { EntityState } from '@ngrx/entity';
 
 export interface IGetPost {
   userId: string;
@@ -7,5 +8,5 @@ export interface IGetPost {
   body: string;
 }
 
-export interface IGetPostRQ extends EntityState<IGetPost> {}
-export interface IGetPostRS extends EntityState<IGetPost> {}
+export interface IGetPostRQ extends EntityState<IPostTableElement> { }
+export interface IGetPostRS extends EntityState<IPostTableElement> { }

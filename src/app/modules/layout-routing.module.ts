@@ -8,8 +8,16 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'design-system',
         loadChildren: () => import('./pages/design-system/design-system.module').then((module) => module.DesignSystemModule)
+      },
+      {
+        path: 'posts',
+        loadChildren: () => import('./pages/posts/posts.module').then((module) => module.PostsModule)
+      },
+      {
+        path: 'posts/:id',
+        loadChildren: () => import('./pages/post-details/post-details.module').then((module) => module.PostDetailsModule)
       }
     ]
   }
