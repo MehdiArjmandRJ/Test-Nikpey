@@ -3,14 +3,14 @@
     <mat-form-field class="example-full-width">
       <mat-label>Author: </mat-label>
       <mat-select [(ngModel)]="selectedFilter" (valueChange)="changeAuthorFilter($event)">
-        <mat-option *ngFor="let item of filterList" [value]="item.key">{{item.value}}</mat-option>
+        <mat-option *ngFor="let item of filterList" [value]="item.key">{{item.value}} - User Id: {{item.key}}</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <!-- <mat-form-field class="example-full-width">
       <mat-label>Title: </mat-label>
       <input type="text" matInput [(ngModel)]="title" (keyup)="changeTitleFilter($event)">
-    </mat-form-field>
+    </mat-form-field> -->
 
   </div>
   <table *ngIf="dataSource" mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">

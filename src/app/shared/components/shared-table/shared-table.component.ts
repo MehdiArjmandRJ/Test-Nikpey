@@ -49,8 +49,11 @@ export class SharedTableComponent implements OnInit {
 
   ngOnInit() {
     this.matDisplayedColumns = this.getMatDisplayedColumns();
+    setTimeout(() => {
+      this.firstDataSource = this.dataSource
+    }, 1000);
   }
-
+  
   getMatDisplayedColumns() {
     return this.displayedColumns.map((item: ITableColumnsModel) => item.key)
   }
@@ -91,8 +94,7 @@ export class SharedTableComponent implements OnInit {
   }
 
   changeAuthorFilter(data: string) {
-    this.firstDataSource = this.dataSource;
-    console.log(this.firstDataSource);
+    // this.myDataSource = this.dataSource;
     let newDataSource = this.firstDataSource.filter((item: any) => item['userId'] === data)
     interval(0).pipe(take(1),
     ).subscribe(() =>
@@ -100,18 +102,18 @@ export class SharedTableComponent implements OnInit {
     )
   }
 
-  changeTitleFilter(event: any) {
-    this.title = event.target.value;
-    if (this.title) {
-      let newDataSource = this.firstDataSource.filter((item: any) => item['title'] === this.title)
-      interval(0).pipe(take(1),
-      ).subscribe(() =>
-        this.dataSource = newDataSource
-      )
-    } else {
-      this.dataSource = this.firstDataSource
-    }
+  // changeTitleFilter(event: any) {
+  //   this.title = event.target.value;
+  //   if (this.title) {
+  //     let newDataSource = this.firstDataSource.includes(this.title)
+  //     interval(0).pipe(take(1),
+  //     ).subscribe(() =>
+  //       this.dataSource = newDataSource
+  //     )
+  //   } else {
+  //     // this.myDataSource = this.dataSource
+  //   }
 
-  }
+  // }
 
 }
